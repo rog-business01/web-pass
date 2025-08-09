@@ -1,10 +1,89 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Shield, Key, Lock, AlertTriangle, CheckCircle, Activity } from 'lucide-react';
 import { StatsCard } from '../components/StatsCard';
 import { SecurityStatus } from '../components/SecurityStatus';
 import { RecentActivity } from '../components/RecentActivity';
+import { useAuth } from '../hooks/useAuth';
+import { CryptoService } from '../services/CryptoService';
+
+// Define the Credential type, mirroring Vault.tsx
+interface Credential {
+  id: string;
+  title: string;
+  username: string;
+  password: string;
+  url?: string;
+  notes?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface DashboardStats {
+  totalCredentials: number;
+  securityScore: number;
+  weakPasswords: number;
+  twoFaEnabled: number;
+}
 
 export function Dashboard() {
+  const { user } = useAuth();
+  const [stats, setStats] = useState<DashboardStats>({
+    totalCredentials: 0,
+    securityScore: 0,
+    weakPasswords: 0,
+    twoFaEnabled: 0,
+  });
+
+  useEffect(() => {
+    if (user) {
+      loadStats();
+    }
+  }, [user]);
+
+  const loadStats = () => {
+    const masterKey = sessionStorage.getItem('masterKey');
+    if (!masterKey) return;
+
+    const encryptedData = localStorage.getItem(`credentials_${user?.uid}`);
+    if (encryptedData) {
+      try {
+        const decryptedData = CryptoService.decrypt(encryptedData, masterKey);
+        const credentials: Credential[] = JSON.parse(decryptedData);
+        calculateStats(credentials);
+      } catch (error) {
+        console.error('Failed to decrypt credentials for dashboard:', error);
+      }
+    }
+  };
+
+  const calculateStats = (credentials: Credential[]) => {
+    const totalCredentials = credentials.length;
+
+    let weakPasswords = 0;
+    let securityScoreSum = 0;
+
+    credentials.forEach(cred => {
+      const strength = CryptoService.calculatePasswordStrength(cred.password);
+      if (strength.score < 50) {
+        weakPasswords++;
+      }
+      securityScoreSum += strength.score;
+    });
+
+    const averageSecurityScore = totalCredentials > 0 ? Math.round(securityScoreSum / totalCredentials) : 100;
+
+    // 2FA calculation is a placeholder as we don't store that info yet.
+    // We'll simulate it based on the number of credentials.
+    const twoFaEnabled = Math.floor(totalCredentials * 0.75);
+
+    setStats({
+      totalCredentials,
+      securityScore: averageSecurityScore,
+      weakPasswords,
+      twoFaEnabled,
+    });
+  };
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -17,29 +96,29 @@ export function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatsCard
           title="Total Credentials"
-          value="24"
-          change="+3 this month"
+          value={stats.totalCredentials.toString()}
+          change="All stored locally"
           icon={Lock}
           color="blue"
         />
         <StatsCard
-          title="Security Score"
-          value="92/100"
-          change="+5 this week"
+          title="Avg. Security Score"
+          value={`${stats.securityScore}/100`}
+          change={stats.securityScore > 80 ? 'Strong' : 'Needs improvement'}
           icon={Shield}
           color="green"
         />
         <StatsCard
           title="Weak Passwords"
-          value="2"
-          change="-1 this month"
+          value={stats.weakPasswords.toString()}
+          change={stats.weakPasswords > 0 ? 'Review these' : 'None found'}
           icon={AlertTriangle}
           color="orange"
         />
         <StatsCard
           title="2FA Enabled"
-          value="18/24"
-          change="75% coverage"
+          value={`${stats.twoFaEnabled}/${stats.totalCredentials}`}
+          change="(Placeholder)"
           icon={CheckCircle}
           color="purple"
         />

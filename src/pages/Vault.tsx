@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Plus, Edit2, Trash2, Eye, EyeOff, Copy, ExternalLink } from 'lucide-react';
+import { Search, Plus, Edit2, Trash2, Eye, EyeOff, Copy, ExternalLink, Check } from 'lucide-react';
 import { CryptoService } from '../services/CryptoService';
 import { useAuth } from '../hooks/useAuth';
 
@@ -21,6 +21,7 @@ export function Vault() {
   const [showPasswords, setShowPasswords] = useState<{ [key: string]: boolean }>({});
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingCredential, setEditingCredential] = useState<Credential | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   useEffect(() => {
     loadCredentials();
@@ -81,8 +82,11 @@ export function Vault() {
     }));
   };
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+  const copyToClipboard = (text: string, id: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    });
   };
 
   const filteredCredentials = credentials.filter(cred =>
@@ -145,10 +149,10 @@ export function Vault() {
                     <div className="flex items-center space-x-2">
                       <span className="text-white">{credential.username}</span>
                       <button
-                        onClick={() => copyToClipboard(credential.username)}
+                        onClick={() => copyToClipboard(credential.username, `${credential.id}-username`)}
                         className="p-1 text-gray-400 hover:text-white transition-colors"
                       >
-                        <Copy className="h-4 w-4" />
+                        {copiedId === `${credential.id}-username` ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
                       </button>
                     </div>
                   </div>
@@ -165,10 +169,10 @@ export function Vault() {
                         {showPasswords[credential.id] ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </button>
                       <button
-                        onClick={() => copyToClipboard(credential.password)}
+                        onClick={() => copyToClipboard(credential.password, `${credential.id}-password`)}
                         className="p-1 text-gray-400 hover:text-white transition-colors"
                       >
-                        <Copy className="h-4 w-4" />
+                        {copiedId === `${credential.id}-password` ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
                       </button>
                     </div>
                   </div>

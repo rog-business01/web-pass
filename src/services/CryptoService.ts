@@ -1,7 +1,7 @@
 import { pbkdf2 } from '@noble/hashes/pbkdf2';
 import { sha256 } from '@noble/hashes/sha256';
 import * as nacl from 'tweetnacl';
-import { encode, decode } from 'tweetnacl-util';
+import { encodeBase64, decodeBase64, encodeUTF8, decodeUTF8 } from 'tweetnacl-util';
 
 export class CryptoService {
   private static readonly SALT = 'credentials-manager-salt-v1';
@@ -11,16 +11,19 @@ export class CryptoService {
    * Derives a master key from the user's master password using PBKDF2
    * This implements zero-knowledge architecture - the server never sees this key
    */
-  static async deriveMasterKey(masterPassword: string): Promise<string> {
-    const salt = new TextEncoder().encode(this.SALT);
-    const password = new TextEncoder().encode(masterPassword);
+  static deriveMasterKeyRaw(masterPassword: string): Uint8Array {
+    const salt = encodeUTF8(this.SALT);
+    const password = encodeUTF8(masterPassword);
     
-    const key = pbkdf2(sha256, password, salt, {
+    return pbkdf2(sha256, password, salt, {
       c: this.ITERATIONS,
       dkLen: 32
     });
-    
-    return encode(key);
+  }
+
+  static createVerificationHash(key: Uint8Array): string {
+    const hash = sha256(key);
+    return encodeBase64(hash);
   }
 
   /**
@@ -28,8 +31,8 @@ export class CryptoService {
    * Uses NaCl (libsodium) for authenticated encryption
    */
   static encrypt(data: string, masterKey: string): string {
-    const key = decode(masterKey);
-    const message = new TextEncoder().encode(data);
+    const key = decodeBase64(masterKey);
+    const message = encodeUTF8(data);
     const nonce = nacl.randomBytes(nacl.secretbox.nonceLength);
     
     const encrypted = nacl.secretbox(message, nonce, key);
@@ -39,15 +42,15 @@ export class CryptoService {
     combined.set(nonce);
     combined.set(encrypted, nonce.length);
     
-    return encode(combined);
+    return encodeBase64(combined);
   }
 
   /**
    * Decrypts data using authenticated decryption
    */
   static decrypt(encryptedData: string, masterKey: string): string {
-    const key = decode(masterKey);
-    const combined = decode(encryptedData);
+    const key = decodeBase64(masterKey);
+    const combined = decodeBase64(encryptedData);
     
     const nonce = combined.slice(0, nacl.secretbox.nonceLength);
     const encrypted = combined.slice(nacl.secretbox.nonceLength);
@@ -57,7 +60,7 @@ export class CryptoService {
       throw new Error('Decryption failed - data may be corrupted');
     }
     
-    return new TextDecoder().decode(decrypted);
+    return decodeUTF8(decrypted);
   }
 
   /**

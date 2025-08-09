@@ -3,6 +3,7 @@ import { User, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEma
 import { auth, db } from '../services/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { CryptoService } from '../services/CryptoService';
+import { encodeBase64 } from 'tweetnacl-util';
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
@@ -70,17 +71,21 @@ export function useAuth() {
     if (!user) return false;
     
     try {
-      // Hash the master password for storage verification
-      const masterPasswordHash = await CryptoService.deriveMasterKey(masterPassword);
+      // Derive the raw encryption key from the master password.
+      const masterKeyRaw = CryptoService.deriveMasterKeyRaw(masterPassword);
       
-      // Store the hash in Firestore
+      // Create a separate hash for verification.
+      const verificationHash = CryptoService.createVerificationHash(masterKeyRaw);
+
+      // Store the verification hash in Firestore.
       await setDoc(doc(db, 'users', user.uid), {
-        masterPasswordHash: masterPasswordHash,
+        masterPasswordHash: verificationHash,
         updatedAt: new Date()
       }, { merge: true });
 
-      // Store the derived key in session for immediate use
-      sessionStorage.setItem('masterKey', masterPasswordHash);
+      // Encode the raw key to Base64 and store it in session storage for encryption.
+      const masterKeyB64 = encodeBase64(masterKeyRaw);
+      sessionStorage.setItem('masterKey', masterKeyB64);
       setHasMasterPassword(true);
       setMasterPasswordUnlocked(true);
       return true;
@@ -94,19 +99,24 @@ export function useAuth() {
     if (!user) return false;
 
     try {
-      // Derive the key from the entered password
-      const derivedKey = await CryptoService.deriveMasterKey(masterPassword);
+      // Derive the raw encryption key from the entered password.
+      const masterKeyRaw = CryptoService.deriveMasterKeyRaw(masterPassword);
+
+      // Create a verification hash from the derived key.
+      const verificationHash = CryptoService.createVerificationHash(masterKeyRaw);
       
-      // Get the stored hash from Firestore
+      // Get the stored verification hash from Firestore.
       const userDoc = await getDoc(doc(db, 'users', user.uid));
       if (!userDoc.exists()) return false;
       
       const userData = userDoc.data();
       const storedHash = userData.masterPasswordHash;
       
-      // Verify the password by comparing hashes
-      if (derivedKey === storedHash) {
-        sessionStorage.setItem('masterKey', derivedKey);
+      // Verify the password by comparing the generated hash with the stored hash.
+      if (verificationHash === storedHash) {
+        // If verification is successful, store the Base64-encoded raw key in session.
+        const masterKeyB64 = encodeBase64(masterKeyRaw);
+        sessionStorage.setItem('masterKey', masterKeyB64);
         setMasterPasswordUnlocked(true);
         return true;
       }
