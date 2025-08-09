@@ -100,12 +100,12 @@ export function Vault() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Password Vault</h1>
-          <p className="text-gray-400">Securely manage your credentials with zero-knowledge encryption</p>
+          <h1 className="text-3xl font-bold text-prose mb-2">Password Vault</h1>
+          <p className="text-muted">Securely manage your credentials with zero-knowledge encryption</p>
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+          className="flex items-center px-4 py-2 bg-brand hover:bg-brand-hover text-white font-medium rounded-lg transition-colors"
         >
           <Plus className="h-5 w-5 mr-2" />
           Add Credential
@@ -114,30 +114,30 @@ export function Vault() {
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted" />
         <input
           type="text"
           placeholder="Search credentials..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 bg-black/20 backdrop-blur-xl border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50"
+          className="w-full pl-10 pr-4 py-3 bg-surface border border-border rounded-lg text-prose placeholder-muted focus:outline-none focus:border-brand/50"
         />
       </div>
 
       {/* Credentials List */}
       <div className="grid gap-4">
         {filteredCredentials.map(credential => (
-          <div key={credential.id} className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6 hover:border-white/20 transition-all duration-200">
+          <div key={credential.id} className="bg-surface border border-border rounded-xl p-6 hover:border-border/70 transition-all duration-200">
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center mb-2">
-                  <h3 className="text-lg font-semibold text-white mr-3">{credential.title}</h3>
+                  <h3 className="text-lg font-semibold text-prose mr-3">{credential.title}</h3>
                   {credential.url && (
                     <a
                       href={credential.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-400 hover:text-blue-300 transition-colors"
+                      className="text-brand hover:text-brand-hover transition-colors"
                     >
                       <ExternalLink className="h-4 w-4" />
                     </a>
@@ -145,40 +145,40 @@ export function Vault() {
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-400">Username:</span>
+                    <span className="text-sm text-muted">Username:</span>
                     <div className="flex items-center space-x-2">
-                      <span className="text-white">{credential.username}</span>
+                      <span className="text-prose">{credential.username}</span>
                       <button
                         onClick={() => copyToClipboard(credential.username, `${credential.id}-username`)}
-                        className="p-1 text-gray-400 hover:text-white transition-colors"
+                        className="p-1 text-muted hover:text-prose transition-colors"
                       >
                         {copiedId === `${credential.id}-username` ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
                       </button>
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-400">Password:</span>
+                    <span className="text-sm text-muted">Password:</span>
                     <div className="flex items-center space-x-2">
-                      <span className="text-white font-mono">
+                      <span className="text-prose font-mono">
                         {showPasswords[credential.id] ? credential.password : '••••••••'}
                       </span>
                       <button
                         onClick={() => togglePasswordVisibility(credential.id)}
-                        className="p-1 text-gray-400 hover:text-white transition-colors"
+                        className="p-1 text-muted hover:text-prose transition-colors"
                       >
                         {showPasswords[credential.id] ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </button>
                       <button
                         onClick={() => copyToClipboard(credential.password, `${credential.id}-password`)}
-                        className="p-1 text-gray-400 hover:text-white transition-colors"
+                        className="p-1 text-muted hover:text-prose transition-colors"
                       >
                         {copiedId === `${credential.id}-password` ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
                       </button>
                     </div>
                   </div>
                   {credential.notes && (
-                    <div className="mt-2 p-3 bg-white/5 rounded-lg">
-                      <p className="text-sm text-gray-300">{credential.notes}</p>
+                    <div className="mt-2 p-3 bg-background rounded-lg">
+                      <p className="text-sm text-muted">{credential.notes}</p>
                     </div>
                   )}
                 </div>
@@ -186,13 +186,13 @@ export function Vault() {
               <div className="flex items-center space-x-2 ml-4">
                 <button
                   onClick={() => setEditingCredential(credential)}
-                  className="p-2 text-gray-400 hover:text-blue-400 transition-colors"
+                  className="p-2 text-muted hover:text-brand transition-colors"
                 >
                   <Edit2 className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => deleteCredential(credential.id)}
-                  className="p-2 text-gray-400 hover:text-red-400 transition-colors"
+                  className="p-2 text-muted hover:text-red-400 transition-colors"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -258,66 +258,66 @@ function CredentialModal({ credential, onSave, onClose }: CredentialModalProps) 
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 w-full max-w-md">
-        <h2 className="text-xl font-semibold text-white mb-6">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-surface border border-border rounded-2xl p-6 w-full max-w-md">
+        <h2 className="text-xl font-semibold text-prose mb-6">
           {credential ? 'Edit Credential' : 'Add Credential'}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Title</label>
+            <label className="block text-sm font-medium text-muted mb-2">Title</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-prose placeholder-muted focus:outline-none focus:border-brand/50"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Username/Email</label>
+            <label className="block text-sm font-medium text-muted mb-2">Username/Email</label>
             <input
               type="text"
               value={formData.username}
               onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
-              className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-prose placeholder-muted focus:outline-none focus:border-brand/50"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
+            <label className="block text-sm font-medium text-muted mb-2">Password</label>
             <div className="flex space-x-2">
               <input
                 type="text"
                 value={formData.password}
                 onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-                className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50"
+                className="flex-1 px-3 py-2 bg-background border border-border rounded-lg text-prose placeholder-muted focus:outline-none focus:border-brand/50"
                 required
               />
               <button
                 type="button"
                 onClick={generatePassword}
-                className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                className="px-3 py-2 bg-brand hover:bg-brand-hover text-white rounded-lg transition-colors"
               >
                 Generate
               </button>
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">URL (optional)</label>
+            <label className="block text-sm font-medium text-muted mb-2">URL (optional)</label>
             <input
               type="url"
               value={formData.url}
               onChange={(e) => setFormData(prev => ({ ...prev, url: e.target.value }))}
-              className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-prose placeholder-muted focus:outline-none focus:border-brand/50"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Notes (optional)</label>
+            <label className="block text-sm font-medium text-muted mb-2">Notes (optional)</label>
             <textarea
               value={formData.notes}
               onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
-              className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-prose placeholder-muted focus:outline-none focus:border-brand/50"
               rows={3}
             />
           </div>
@@ -325,13 +325,13 @@ function CredentialModal({ credential, onSave, onClose }: CredentialModalProps) 
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
+              className="px-4 py-2 text-muted hover:text-prose transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+              className="px-4 py-2 bg-brand hover:bg-brand-hover text-white font-medium rounded-lg transition-colors"
             >
               Save
             </button>

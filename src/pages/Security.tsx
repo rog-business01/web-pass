@@ -6,23 +6,23 @@ export function Security() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-white mb-2">Security Center</h1>
-        <p className="text-gray-400">Monitor and manage your security settings and audit logs</p>
+        <h1 className="text-3xl font-bold text-prose mb-2">Security Center</h1>
+        <p className="text-muted">Monitor and manage your security settings and audit logs</p>
       </div>
 
       {/* Security Score */}
-      <div className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-8">
+      <div className="bg-surface border border-border rounded-xl p-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-2xl font-semibold text-white mb-2">Security Score</h3>
-            <p className="text-gray-400">Based on password strength, 2FA coverage, and security practices</p>
+            <h3 className="text-2xl font-semibold text-prose mb-2">Security Score</h3>
+            <p className="text-muted">Based on password strength, 2FA coverage, and security practices</p>
           </div>
           <div className="text-right">
             <div className="text-4xl font-bold text-green-400">92</div>
-            <div className="text-sm text-gray-400">out of 100</div>
+            <div className="text-sm text-muted">out of 100</div>
           </div>
         </div>
-        <div className="w-full bg-gray-700 rounded-full h-3">
+        <div className="w-full bg-background rounded-full h-3">
           <div className="bg-gradient-to-r from-green-500 to-green-400 h-3 rounded-full" style={{ width: '92%' }} />
         </div>
       </div>
@@ -67,8 +67,8 @@ export function Security() {
       </div>
 
       {/* Security Recommendations */}
-      <div className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6">
-        <h3 className="text-xl font-semibold text-white mb-6 flex items-center">
+      <div className="bg-surface border border-border rounded-xl p-6">
+        <h3 className="text-xl font-semibold text-prose mb-6 flex items-center">
           <AlertTriangle className="h-6 w-6 mr-2 text-orange-400" />
           Security Recommendations
         </h3>
@@ -77,8 +77,8 @@ export function Security() {
           <div className="flex items-start p-4 bg-orange-600/10 border border-orange-500/20 rounded-lg">
             <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5 mr-3" />
             <div>
-              <h4 className="font-medium text-white">Enable 2FA for remaining accounts</h4>
-              <p className="text-sm text-gray-400 mt-1">6 accounts don't have two-factor authentication enabled</p>
+              <h4 className="font-medium text-prose">Enable 2FA for remaining accounts</h4>
+              <p className="text-sm text-muted mt-1">6 accounts don't have two-factor authentication enabled</p>
               <button className="text-sm text-orange-400 hover:text-orange-300 mt-2">View accounts →</button>
             </div>
           </div>
@@ -86,18 +86,18 @@ export function Security() {
           <div className="flex items-start p-4 bg-yellow-600/10 border border-yellow-500/20 rounded-lg">
             <Info className="h-5 w-5 text-yellow-400 mt-0.5 mr-3" />
             <div>
-              <h4 className="font-medium text-white">Update weak passwords</h4>
-              <p className="text-sm text-gray-400 mt-1">2 passwords are considered weak and should be updated</p>
+              <h4 className="font-medium text-prose">Update weak passwords</h4>
+              <p className="text-sm text-muted mt-1">2 passwords are considered weak and should be updated</p>
               <button className="text-sm text-yellow-400 hover:text-yellow-300 mt-2">Generate strong passwords →</button>
             </div>
           </div>
           
-          <div className="flex items-start p-4 bg-blue-600/10 border border-blue-500/20 rounded-lg">
-            <Info className="h-5 w-5 text-blue-400 mt-0.5 mr-3" />
+          <div className="flex items-start p-4 bg-brand/10 border border-brand/20 rounded-lg">
+            <Info className="h-5 w-5 text-brand mt-0.5 mr-3" />
             <div>
-              <h4 className="font-medium text-white">Regular password rotation</h4>
-              <p className="text-sm text-gray-400 mt-1">Consider updating passwords that are over 90 days old</p>
-              <button className="text-sm text-blue-400 hover:text-blue-300 mt-2">View old passwords →</button>
+              <h4 className="font-medium text-prose">Regular password rotation</h4>
+              <p className="text-sm text-muted mt-1">Consider updating passwords that are over 90 days old</p>
+              <button className="text-sm text-brand hover:text-brand-hover mt-2">View old passwords →</button>
             </div>
           </div>
         </div>
@@ -105,8 +105,8 @@ export function Security() {
 
       {/* Audit Log */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6">
-          <h3 className="text-xl font-semibold text-white mb-6">Recent Security Events</h3>
+        <div className="bg-surface border border-border rounded-xl p-6">
+          <h3 className="text-xl font-semibold text-prose mb-6">Recent Security Events</h3>
           
           <div className="space-y-4">
             {[
@@ -115,31 +115,31 @@ export function Security() {
               { type: 'info', icon: Shield, text: '2FA enabled for GitHub account', time: '2 days ago' },
               { type: 'success', icon: Lock, text: 'Password updated for email account', time: '3 days ago' },
             ].map((event, index) => (
-              <div key={index} className="flex items-start space-x-3 p-3 bg-white/5 rounded-lg">
+              <div key={index} className="flex items-start space-x-3 p-3 bg-background rounded-lg">
                 <event.icon className={`h-5 w-5 mt-0.5 ${
                   event.type === 'success' ? 'text-green-400' :
                   event.type === 'warning' ? 'text-orange-400' :
-                  'text-blue-400'
+                  'text-brand'
                 }`} />
                 <div>
-                  <p className="text-sm text-white">{event.text}</p>
-                  <p className="text-xs text-gray-400 mt-1">{event.time}</p>
+                  <p className="text-sm text-prose">{event.text}</p>
+                  <p className="text-xs text-muted mt-1">{event.time}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
         
-        <div className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6">
-          <h3 className="text-xl font-semibold text-white mb-6">Security Actions</h3>
+        <div className="bg-surface border border-border rounded-xl p-6">
+          <h3 className="text-xl font-semibold text-prose mb-6">Security Actions</h3>
           
           <div className="space-y-4">
-            <button className="w-full flex items-center justify-between p-4 bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500/20 rounded-lg transition-colors text-left">
+            <button className="w-full flex items-center justify-between p-4 bg-brand/10 hover:bg-brand/20 border border-brand/20 rounded-lg transition-colors text-left">
               <div className="flex items-center">
-                <Download className="h-5 w-5 text-blue-400 mr-3" />
+                <Download className="h-5 w-5 text-brand mr-3" />
                 <div>
-                  <p className="text-white font-medium">Export Security Report</p>
-                  <p className="text-sm text-gray-400">Download detailed security analysis</p>
+                  <p className="text-prose font-medium">Export Security Report</p>
+                  <p className="text-sm text-muted">Download detailed security analysis</p>
                 </div>
               </div>
             </button>
@@ -148,8 +148,8 @@ export function Security() {
               <div className="flex items-center">
                 <Shield className="h-5 w-5 text-green-400 mr-3" />
                 <div>
-                  <p className="text-white font-medium">Run Security Scan</p>
-                  <p className="text-sm text-gray-400">Check for security vulnerabilities</p>
+                  <p className="text-prose font-medium">Run Security Scan</p>
+                  <p className="text-sm text-muted">Check for security vulnerabilities</p>
                 </div>
               </div>
             </button>
@@ -158,8 +158,8 @@ export function Security() {
               <div className="flex items-center">
                 <Key className="h-5 w-5 text-purple-400 mr-3" />
                 <div>
-                  <p className="text-white font-medium">Backup Encryption Keys</p>
-                  <p className="text-sm text-gray-400">Secure backup of your encryption keys</p>
+                  <p className="text-prose font-medium">Backup Encryption Keys</p>
+                  <p className="text-sm text-muted">Secure backup of your encryption keys</p>
                 </div>
               </div>
             </button>
@@ -188,7 +188,7 @@ function SecurityCategory({ title, score, status, icon: Icon, items }: SecurityC
       case 'danger':
         return 'text-red-400 border-red-500/30';
       default:
-        return 'text-gray-400 border-gray-500/30';
+        return 'text-muted border-border';
     }
   };
 
@@ -199,11 +199,11 @@ function SecurityCategory({ title, score, status, icon: Icon, items }: SecurityC
   };
 
   return (
-    <div className={`bg-black/20 backdrop-blur-xl border ${getStatusColor(status)} rounded-xl p-6`}>
+    <div className={`bg-surface border ${getStatusColor(status)} rounded-xl p-6`}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center">
           <Icon className={`h-6 w-6 mr-2 ${getStatusColor(status).split(' ')[0]}`} />
-          <h3 className="text-lg font-semibold text-white">{title}</h3>
+          <h3 className="text-lg font-semibold text-prose">{title}</h3>
         </div>
         <span className={`text-2xl font-bold ${getScoreColor(score)}`}>{score}</span>
       </div>
@@ -216,7 +216,7 @@ function SecurityCategory({ title, score, status, icon: Icon, items }: SecurityC
               item.status === 'warning' ? 'bg-orange-400' :
               'bg-red-400'
             }`} />
-            <span className="text-gray-300">{item.text}</span>
+            <span className="text-muted">{item.text}</span>
           </div>
         ))}
       </div>

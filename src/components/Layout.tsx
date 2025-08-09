@@ -29,15 +29,15 @@ export function Layout({ children }: LayoutProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-background text-prose">
       <div className="flex">
         {/* Sidebar */}
-        <div className="fixed inset-y-0 left-0 z-50 w-64 bg-black/20 backdrop-blur-xl border-r border-white/10">
+        <div className="fixed inset-y-0 left-0 z-50 w-64 bg-surface border-r border-border">
           <div className="flex flex-col h-full">
             {/* Logo */}
             <div className="flex items-center px-6 py-6">
-              <Shield className="h-8 w-8 text-blue-400" />
-              <span className="ml-2 text-xl font-bold text-white">SecureVault</span>
+              <Shield className="h-8 w-8 text-brand" />
+              <span className="ml-2 text-xl font-bold text-prose">SecureVault</span>
             </div>
             
             {/* Navigation */}
@@ -50,8 +50,8 @@ export function Layout({ children }: LayoutProps) {
                     to={item.href}
                     className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
                       isActive
-                        ? 'bg-blue-600/20 text-blue-400 border border-blue-500/30'
-                        : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                        ? 'bg-brand/10 text-brand border border-brand/20'
+                        : 'text-muted hover:bg-brand/5 hover:text-prose'
                     }`}
                   >
                     <item.icon className="mr-3 h-5 w-5" />
@@ -65,21 +65,21 @@ export function Layout({ children }: LayoutProps) {
             <div className="p-4">
               <button
                 onClick={lockVault}
-                className="flex items-center w-full px-4 py-3 text-sm font-medium text-gray-300 hover:bg-orange-600/20 hover:text-orange-400 rounded-lg transition-all duration-200 mb-2"
+                className="flex items-center w-full px-4 py-3 text-sm font-medium text-muted hover:bg-orange-600/20 hover:text-orange-400 rounded-lg transition-all duration-200 mb-2"
               >
                 <LockKeyhole className="mr-3 h-5 w-5" />
                 Lock Vault
               </button>
               <button
                 onClick={logout}
-                className="flex items-center w-full px-4 py-3 text-sm font-medium text-gray-300 hover:bg-red-600/20 hover:text-red-400 rounded-lg transition-all duration-200"
+                className="flex items-center w-full px-4 py-3 text-sm font-medium text-muted hover:bg-red-600/20 hover:text-red-400 rounded-lg transition-all duration-200"
               >
                 <LogOut className="mr-3 h-5 w-5" />
                 Sign Out
               </button>
-              <div className="mt-3 px-4 py-2 bg-white/5 rounded-lg">
-                <p className="text-xs text-gray-400">Signed in as</p>
-                <p className="text-sm text-white truncate">{user?.email}</p>
+              <div className="mt-3 px-4 py-2 bg-background rounded-lg">
+                <p className="text-xs text-muted">Signed in as</p>
+                <p className="text-sm text-prose truncate">{user?.email}</p>
               </div>
             </div>
           </div>

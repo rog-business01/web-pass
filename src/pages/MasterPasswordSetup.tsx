@@ -54,23 +54,23 @@ export function MasterPasswordSetup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        <div className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
+        <div className="bg-surface border border-border rounded-2xl p-8 shadow-2xl">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-green-600/20 rounded-full border border-green-500/30 mb-4">
-              <Key className="h-8 w-8 text-green-400" />
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-brand/10 rounded-full border border-brand/20 mb-4">
+              <Key className="h-8 w-8 text-brand" />
             </div>
-            <h1 className="text-2xl font-bold text-white mb-2">Create Master Password</h1>
-            <p className="text-gray-400">This password will encrypt all your credentials</p>
-            <p className="text-sm text-blue-400 mt-2">Welcome, {user?.email}</p>
+            <h1 className="text-2xl font-bold text-prose mb-2">Create Master Password</h1>
+            <p className="text-muted">This password will encrypt all your credentials</p>
+            <p className="text-sm text-brand mt-2">Welcome, {user?.email}</p>
           </div>
 
           {/* Setup Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="masterPassword" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="masterPassword" className="block text-sm font-medium text-muted mb-2">
                 Master Password
               </label>
               <div className="relative">
@@ -79,7 +79,7 @@ export function MasterPasswordSetup() {
                   type={showPassword ? 'text' : 'password'}
                   value={masterPassword}
                   onChange={(e) => setMasterPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all duration-200"
+                  className="w-full px-4 py-3 bg-background border border-border rounded-lg text-prose placeholder-muted focus:outline-none focus:border-brand/50 focus:bg-surface transition-all duration-200"
                   placeholder="Create a strong master password"
                   autoComplete="new-password"
                   required
@@ -87,7 +87,7 @@ export function MasterPasswordSetup() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted hover:text-prose transition-colors"
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -97,12 +97,12 @@ export function MasterPasswordSetup() {
               {passwordStrength && (
                 <div className="mt-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-gray-300">Password Strength</span>
+                    <span className="text-sm text-muted">Password Strength</span>
                     <span className={`text-xs font-bold px-2 py-1 rounded-full ${getStrengthColor(passwordStrength.score)}`}>
                       {getStrengthText(passwordStrength.score)}
                     </span>
                   </div>
-                  <div className="w-full bg-gray-700 rounded-full h-2 mb-2">
+                  <div className="w-full bg-background rounded-full h-2 mb-2">
                     <div 
                       className={`h-2 rounded-full transition-all duration-300 ${
                         passwordStrength.score >= 80 ? 'bg-green-500' :
@@ -113,7 +113,7 @@ export function MasterPasswordSetup() {
                     />
                   </div>
                   {passwordStrength.feedback.length > 0 && (
-                    <ul className="text-xs text-gray-400 space-y-1">
+                    <ul className="text-xs text-muted space-y-1">
                       {passwordStrength.feedback.map((feedback, index) => (
                         <li key={index}>• {feedback}</li>
                       ))}
@@ -124,7 +124,7 @@ export function MasterPasswordSetup() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-muted mb-2">
                 Confirm Master Password
               </label>
               <div className="relative">
@@ -133,7 +133,7 @@ export function MasterPasswordSetup() {
                   type={showConfirm ? 'text' : 'password'}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all duration-200"
+                  className="w-full px-4 py-3 bg-background border border-border rounded-lg text-prose placeholder-muted focus:outline-none focus:border-brand/50 focus:bg-surface transition-all duration-200"
                   placeholder="Confirm your master password"
                   autoComplete="new-password"
                   required
@@ -141,7 +141,7 @@ export function MasterPasswordSetup() {
                 <button
                   type="button"
                   onClick={() => setShowConfirm(!showConfirm)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted hover:text-prose transition-colors"
                 >
                   {showConfirm ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -167,16 +167,16 @@ export function MasterPasswordSetup() {
             <button
               type="submit"
               disabled={!masterPassword || !confirmPassword || masterPassword !== confirmPassword || isLoading || (passwordStrength && passwordStrength.score < 60)}
-              className="w-full py-3 px-4 bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500/50"
+              className="w-full py-3 px-4 bg-brand hover:bg-brand-hover disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand/50"
             >
               {isLoading ? 'Creating Master Password...' : 'Create Master Password'}
             </button>
           </form>
 
           {/* Security Notice */}
-          <div className="mt-6 p-4 bg-blue-600/10 border border-blue-500/20 rounded-lg">
-            <h4 className="font-medium text-blue-400 mb-2">Important Security Notice</h4>
-            <ul className="text-xs text-gray-300 space-y-1">
+          <div className="mt-6 p-4 bg-brand/10 border border-brand/20 rounded-lg">
+            <h4 className="font-medium text-brand mb-2">Important Security Notice</h4>
+            <ul className="text-xs text-muted space-y-1">
               <li>• Your master password encrypts all your credentials</li>
               <li>• We cannot recover your master password if you forget it</li>
               <li>• Choose a password you'll remember but others can't guess</li>

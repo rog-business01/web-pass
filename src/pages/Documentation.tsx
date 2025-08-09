@@ -3,16 +3,16 @@ import { FileText, Shield, Key, Lock, Code, Server, Database, Globe } from 'luci
 
 export function Documentation() {
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8 text-prose">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-white mb-2">Technical Documentation</h1>
-        <p className="text-gray-400">Complete technical specifications and implementation details</p>
+        <h1 className="text-3xl font-bold text-prose mb-2">Technical Documentation</h1>
+        <p className="text-muted">Complete technical specifications and implementation details</p>
       </div>
 
       {/* Table of Contents */}
-      <div className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6">
-        <h2 className="text-xl font-semibold text-white mb-4">Table of Contents</h2>
+      <div className="bg-surface border border-border rounded-xl p-6">
+        <h2 className="text-xl font-semibold text-prose mb-4">Table of Contents</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
             { title: 'System Architecture', anchor: '#architecture', icon: Server },
@@ -25,27 +25,27 @@ export function Documentation() {
             <a
               key={index}
               href={item.anchor}
-              className="flex items-center p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-colors"
+              className="flex items-center p-3 bg-background hover:bg-brand/10 border border-border rounded-lg transition-colors"
             >
-              <item.icon className="h-5 w-5 text-blue-400 mr-3" />
-              <span className="text-white">{item.title}</span>
+              <item.icon className="h-5 w-5 text-brand mr-3" />
+              <span className="text-prose">{item.title}</span>
             </a>
           ))}
         </div>
       </div>
 
       {/* System Architecture */}
-      <section id="architecture" className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6">
-        <h2 className="text-2xl font-semibold text-white mb-6 flex items-center">
-          <Server className="h-6 w-6 mr-2 text-blue-400" />
+      <section id="architecture" className="bg-surface border border-border rounded-xl p-6">
+        <h2 className="text-2xl font-semibold text-prose mb-6 flex items-center">
+          <Server className="h-6 w-6 mr-2 text-brand" />
           System Architecture
         </h2>
         
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium text-white mb-3">Zero-Knowledge Architecture</h3>
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-              <pre className="text-sm text-gray-300 overflow-x-auto">
+            <h3 className="text-lg font-medium text-prose mb-3">Zero-Knowledge Architecture</h3>
+            <div className="bg-background border border-border rounded-lg p-4">
+              <pre className="text-sm text-muted overflow-x-auto">
 {`┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   User Device   │    │   Application   │    │ Storage Layer   │
 │                 │    │                 │    │                 │
@@ -66,11 +66,11 @@ export function Documentation() {
           </div>
 
           <div>
-            <h3 className="text-lg font-medium text-white mb-3">Component Architecture</h3>
+            <h3 className="text-lg font-medium text-prose mb-3">Component Architecture</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-blue-600/10 border border-blue-500/20 rounded-lg p-4">
-                <h4 className="font-medium text-blue-400 mb-2">Frontend Components</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
+              <div className="bg-brand/10 border border-brand/20 rounded-lg p-4">
+                <h4 className="font-medium text-brand mb-2">Frontend Components</h4>
+                <ul className="text-sm text-muted space-y-1">
                   <li>• React 18 with TypeScript</li>
                   <li>• Crypto Service Layer</li>
                   <li>• Secure Storage Manager</li>
@@ -80,7 +80,7 @@ export function Documentation() {
               </div>
               <div className="bg-green-600/10 border border-green-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-green-400 mb-2">Security Layer</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
+                <ul className="text-sm text-muted space-y-1">
                   <li>• TweetNaCl (libsodium)</li>
                   <li>• @noble/hashes</li>
                   <li>• Web Crypto API</li>
@@ -94,17 +94,17 @@ export function Documentation() {
       </section>
 
       {/* Security Implementation */}
-      <section id="security" className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6">
-        <h2 className="text-2xl font-semibold text-white mb-6 flex items-center">
+      <section id="security" className="bg-surface border border-border rounded-xl p-6">
+        <h2 className="text-2xl font-semibold text-prose mb-6 flex items-center">
           <Shield className="h-6 w-6 mr-2 text-green-400" />
           Security Implementation
         </h2>
         
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium text-white mb-3">Encryption Flow</h3>
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-              <pre className="text-sm text-gray-300 overflow-x-auto">
+            <h3 className="text-lg font-medium text-prose mb-3">Encryption Flow</h3>
+            <div className="bg-background border border-border rounded-lg p-4">
+              <pre className="text-sm text-muted overflow-x-auto">
 {`1. Master Password Entry
    ↓
 2. PBKDF2 Key Derivation
@@ -129,23 +129,23 @@ export function Documentation() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="text-lg font-medium text-white mb-3">Attack Mitigation</h3>
+              <h3 className="text-lg font-medium text-prose mb-3">Attack Mitigation</h3>
               <div className="space-y-3">
                 <div className="bg-red-600/10 border border-red-500/20 rounded-lg p-3">
                   <h4 className="font-medium text-red-400">Brute Force Protection</h4>
-                  <p className="text-sm text-gray-300 mt-1">
+                  <p className="text-sm text-muted mt-1">
                     PBKDF2 with 100,000 iterations makes password cracking computationally expensive
                   </p>
                 </div>
                 <div className="bg-orange-600/10 border border-orange-500/20 rounded-lg p-3">
                   <h4 className="font-medium text-orange-400">Timing Attack Prevention</h4>
-                  <p className="text-sm text-gray-300 mt-1">
+                  <p className="text-sm text-muted mt-1">
                     Constant-time comparisons and authenticated encryption prevent timing analysis
                   </p>
                 </div>
                 <div className="bg-yellow-600/10 border border-yellow-500/20 rounded-lg p-3">
                   <h4 className="font-medium text-yellow-400">Data Integrity</h4>
-                  <p className="text-sm text-gray-300 mt-1">
+                  <p className="text-sm text-muted mt-1">
                     Authenticated encryption ensures data hasn't been tampered with
                   </p>
                 </div>
@@ -153,7 +153,7 @@ export function Documentation() {
             </div>
 
             <div>
-              <h3 className="text-lg font-medium text-white mb-3">Security Checklist</h3>
+              <h3 className="text-lg font-medium text-prose mb-3">Security Checklist</h3>
               <div className="space-y-2">
                 {[
                   'Client-side encryption only',
@@ -167,7 +167,7 @@ export function Documentation() {
                 ].map((item, index) => (
                   <div key={index} className="flex items-center text-sm">
                     <div className="w-2 h-2 bg-green-400 rounded-full mr-3" />
-                    <span className="text-gray-300">{item}</span>
+                    <span className="text-muted">{item}</span>
                   </div>
                 ))}
               </div>
@@ -177,15 +177,15 @@ export function Documentation() {
       </section>
 
       {/* Technology Stack */}
-      <section id="tech-stack" className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6">
-        <h2 className="text-2xl font-semibold text-white mb-6 flex items-center">
-          <Code className="h-6 w-6 mr-2 text-purple-400" />
+      <section id="tech-stack" className="bg-surface border border-border rounded-xl p-6">
+        <h2 className="text-2xl font-semibold text-prose mb-6 flex items-center">
+          <Code className="h-6 w-6 mr-2 text-brand" />
           Technology Stack
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <h3 className="text-lg font-medium text-white mb-3">Frontend</h3>
+            <h3 className="text-lg font-medium text-prose mb-3">Frontend</h3>
             <div className="space-y-2">
               {[
                 { name: 'React 18', version: '^18.3.1', purpose: 'UI Framework' },
@@ -193,38 +193,38 @@ export function Documentation() {
                 { name: 'Tailwind CSS', version: '^3.4.1', purpose: 'Styling' },
                 { name: 'Vite', version: '^5.4.2', purpose: 'Build Tool' },
               ].map((tech, index) => (
-                <div key={index} className="bg-white/5 border border-white/10 rounded p-2">
+                <div key={index} className="bg-background border border-border rounded p-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-white font-medium">{tech.name}</span>
-                    <span className="text-xs text-blue-400">{tech.version}</span>
+                    <span className="text-prose font-medium">{tech.name}</span>
+                    <span className="text-xs text-brand">{tech.version}</span>
                   </div>
-                  <p className="text-xs text-gray-400">{tech.purpose}</p>
+                  <p className="text-xs text-muted">{tech.purpose}</p>
                 </div>
               ))}
             </div>
           </div>
 
           <div>
-            <h3 className="text-lg font-medium text-white mb-3">Cryptography</h3>
+            <h3 className="text-lg font-medium text-prose mb-3">Cryptography</h3>
             <div className="space-y-2">
               {[
                 { name: 'TweetNaCl', version: '^1.0.3', purpose: 'NaCl Crypto Library' },
                 { name: '@noble/hashes', version: '^1.3.3', purpose: 'Hash Functions' },
                 { name: 'Web Crypto API', version: 'Native', purpose: 'Browser Crypto' },
               ].map((tech, index) => (
-                <div key={index} className="bg-white/5 border border-white/10 rounded p-2">
+                <div key={index} className="bg-background border border-border rounded p-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-white font-medium">{tech.name}</span>
+                    <span className="text-prose font-medium">{tech.name}</span>
                     <span className="text-xs text-green-400">{tech.version}</span>
                   </div>
-                  <p className="text-xs text-gray-400">{tech.purpose}</p>
+                  <p className="text-xs text-muted">{tech.purpose}</p>
                 </div>
               ))}
             </div>
           </div>
 
           <div>
-            <h3 className="text-lg font-medium text-white mb-3">Recommended Backend</h3>
+            <h3 className="text-lg font-medium text-prose mb-3">Recommended Backend</h3>
             <div className="space-y-2">
               {[
                 { name: 'Node.js', version: '18+', purpose: 'Runtime' },
@@ -232,12 +232,12 @@ export function Documentation() {
                 { name: 'PostgreSQL', version: '14+', purpose: 'Database' },
                 { name: 'Redis', version: '6+', purpose: 'Session Store' },
               ].map((tech, index) => (
-                <div key={index} className="bg-white/5 border border-white/10 rounded p-2">
+                <div key={index} className="bg-background border border-border rounded p-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-white font-medium">{tech.name}</span>
+                    <span className="text-prose font-medium">{tech.name}</span>
                     <span className="text-xs text-orange-400">{tech.version}</span>
                   </div>
-                  <p className="text-xs text-gray-400">{tech.purpose}</p>
+                  <p className="text-xs text-muted">{tech.purpose}</p>
                 </div>
               ))}
             </div>
@@ -246,17 +246,17 @@ export function Documentation() {
       </section>
 
       {/* API Documentation */}
-      <section id="api" className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6">
-        <h2 className="text-2xl font-semibent text-white mb-6 flex items-center">
-          <Globe className="h-6 w-6 mr-2 text-blue-400" />
+      <section id="api" className="bg-surface border border-border rounded-xl p-6">
+        <h2 className="text-2xl font-semibent text-prose mb-6 flex items-center">
+          <Globe className="h-6 w-6 mr-2 text-brand" />
           API Documentation
         </h2>
         
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium text-white mb-3">Core API Methods</h3>
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-              <pre className="text-sm text-gray-300 overflow-x-auto">
+            <h3 className="text-lg font-medium text-prose mb-3">Core API Methods</h3>
+            <div className="bg-background border border-border rounded-lg p-4">
+              <pre className="text-sm text-muted overflow-x-auto">
 {`// Crypto Service API
 class CryptoService {
   // Key derivation from master password
@@ -291,10 +291,10 @@ class AutoFillService {
           </div>
 
           <div>
-            <h3 className="text-lg font-medium text-white mb-3">Browser Extension API</h3>
-            <div className="bg-blue-600/10 border border-blue-500/20 rounded-lg p-4">
-              <h4 className="font-medium text-blue-400 mb-2">Content Script Communication</h4>
-              <pre className="text-sm text-gray-300">
+            <h3 className="text-lg font-medium text-prose mb-3">Browser Extension API</h3>
+            <div className="bg-brand/10 border border-brand/20 rounded-lg p-4">
+              <h4 className="font-medium text-brand mb-2">Content Script Communication</h4>
+              <pre className="text-sm text-muted">
 {`// Message passing for secure auto-fill
 chrome.runtime.sendMessage({
   type: 'GET_CREDENTIALS',
@@ -311,8 +311,8 @@ chrome.runtime.sendMessage({
       </section>
 
       {/* Security Audit */}
-      <section className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6">
-        <h2 className="text-2xl font-semibold text-white mb-6 flex items-center">
+      <section className="bg-surface border border-border rounded-xl p-6">
+        <h2 className="text-2xl font-semibold text-prose mb-6 flex items-center">
           <Shield className="h-6 w-6 mr-2 text-red-400" />
           Security Audit Guidelines
         </h2>
@@ -320,8 +320,8 @@ chrome.runtime.sendMessage({
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="text-lg font-medium text-white mb-3">Automated Testing</h3>
-              <ul className="space-y-2 text-sm text-gray-300">
+              <h3 className="text-lg font-medium text-prose mb-3">Automated Testing</h3>
+              <ul className="space-y-2 text-sm text-muted">
                 <li>• Static code analysis (ESLint, SonarQube)</li>
                 <li>• Dependency vulnerability scanning</li>
                 <li>• SAST (Static Application Security Testing)</li>
@@ -330,8 +330,8 @@ chrome.runtime.sendMessage({
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-medium text-white mb-3">Manual Penetration Testing</h3>
-              <ul className="space-y-2 text-sm text-gray-300">
+              <h3 className="text-lg font-medium text-prose mb-3">Manual Penetration Testing</h3>
+              <ul className="space-y-2 text-sm text-muted">
                 <li>• Memory analysis for key exposure</li>
                 <li>• Side-channel attack testing</li>
                 <li>• Browser security model validation</li>
@@ -343,7 +343,7 @@ chrome.runtime.sendMessage({
 
           <div className="bg-red-600/10 border border-red-500/20 rounded-lg p-4">
             <h4 className="font-medium text-red-400 mb-2">Critical Security Requirements</h4>
-            <ul className="text-sm text-gray-300 space-y-1">
+            <ul className="text-sm text-muted space-y-1">
               <li>✓ No plaintext storage of sensitive data</li>
               <li>✓ Master password never transmitted</li>
               <li>✓ Encryption keys derived client-side only</li>

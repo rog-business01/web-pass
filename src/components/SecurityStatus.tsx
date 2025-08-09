@@ -40,25 +40,25 @@ export function SecurityStatus() {
       case 'warning':
         return 'text-orange-400 bg-orange-600/20 border-orange-500/30';
       case 'info':
-        return 'text-blue-400 bg-blue-600/20 border-blue-500/30';
+        return 'text-brand bg-brand/10 border-brand/20';
       default:
-        return 'text-gray-400 bg-gray-600/20 border-gray-500/30';
+        return 'text-muted bg-muted/10 border-muted/20';
     }
   };
 
   return (
-    <div className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6">
-      <h3 className="text-xl font-semibold text-white mb-6">Security Status</h3>
+    <div className="bg-surface border border-border rounded-xl p-6">
+      <h3 className="text-xl font-semibold text-prose mb-6">Security Status</h3>
       <div className="space-y-4">
         {securityItems.map((item, index) => (
-          <div key={index} className="flex items-start space-x-4 p-4 bg-white/5 rounded-lg border border-white/10">
+          <div key={index} className="flex items-start space-x-4 p-4 bg-background rounded-lg border border-border">
             <div className={`p-2 rounded-lg ${getStatusColor(item.status)}`}>
               <item.icon className="h-5 w-5" />
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="font-medium text-white">{item.title}</h4>
-              <p className="text-sm text-gray-400 mt-1">{item.message}</p>
-              <p className="text-sm text-blue-400 mt-2">{item.action}</p>
+              <h4 className="font-medium text-prose">{item.title}</h4>
+              <p className="text-sm text-muted mt-1">{item.message}</p>
+              <p className="text-sm text-brand mt-2">{item.action}</p>
             </div>
           </div>
         ))}

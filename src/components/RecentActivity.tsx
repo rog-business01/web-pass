@@ -34,17 +34,17 @@ export function RecentActivity() {
   ];
 
   return (
-    <div className="bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-6">
-      <h3 className="text-xl font-semibold text-white mb-6">Recent Activity</h3>
+    <div className="bg-surface border border-border rounded-xl p-6">
+      <h3 className="text-xl font-semibold text-prose mb-6">Recent Activity</h3>
       <div className="space-y-4">
         {activities.map((activity, index) => (
           <div key={index} className="flex items-start space-x-3">
-            <div className={`p-2 rounded-lg bg-white/5 ${activity.color}`}>
+            <div className={`p-2 rounded-lg bg-background ${activity.color}`}>
               <activity.icon className="h-4 w-4" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm text-white">{activity.message}</p>
-              <p className="text-xs text-gray-400 mt-1">{activity.time}</p>
+              <p className="text-sm text-prose">{activity.message}</p>
+              <p className="text-xs text-muted mt-1">{activity.time}</p>
             </div>
           </div>
         ))}
